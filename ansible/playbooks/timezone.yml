@@ -1,0 +1,6 @@
+- name: Set timezone
+  hosts: "*"
+  become: yes
+  tasks:
+  - name: set timezone
+    shell: timedatectl set-timezone America/New_York
