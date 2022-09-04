@@ -19,7 +19,6 @@ services:
     environment:
       - CLUSTER_NAME=Shindook
       - DOCKER_NETWORK=docker_hadoop
-      - DEPENDENCY="namenode:9000"
 
   datanode2:
     image: akhlakm/hadoop-datanode
@@ -28,4 +27,3 @@ services:
     environment:
       - CLUSTER_NAME=Shindook
       - DOCKER_NETWORK=docker_hadoop
-      - DEPENDENCY="namenode:9000"
