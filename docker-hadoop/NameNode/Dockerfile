@@ -11,7 +11,7 @@ EXPOSE 9870
 EXPOSE 9000
 
 # copy the service entry
-ADD run.sh /run.sh 
-RUN chmod a+x /run.sh 
+ADD namenode.sh /namenode.sh 
+RUN chmod a+x /namenode.sh 
 
-CMD ["/run.sh"]
+CMD ["/namenode.sh"]
