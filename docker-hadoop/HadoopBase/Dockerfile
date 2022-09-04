@@ -52,7 +52,7 @@ ENV USER=root
 # Setup configurations
 ADD setup.sh /setup.sh
 RUN chmod a+x /setup.sh
-RUN bash /setup.sh
+# RUN bash /setup.sh
 
 # Use entrypoint, so the current image is an executable, not a service
-# ENTRYPOINT [ "/setup.sh" ]
+ENTRYPOINT [ "/setup.sh" ]

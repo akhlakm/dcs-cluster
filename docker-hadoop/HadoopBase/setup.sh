@@ -9,7 +9,7 @@ function addProperty() {
     local name=$2
     local value=$3
 
-    echo "SET $name=$value to $1"
+    # echo "SET $name=$value to $1"
 
     local entry="<property><name>$name</name><value>${value}</value></property>"
     local escapedEntry=$(echo $entry | sed 's/\//\\\//g')
