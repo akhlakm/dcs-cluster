@@ -62,7 +62,7 @@ addProperty yarn-site.xml yarn.nodemanager.resource.memory-mb 16384
 addProperty yarn-site.xml yarn.nodemanager.resource.cpu-vcores 8
 addProperty yarn-site.xml yarn.nodemanager.disk-health-checker.max-disk-utilization-per-disk-percentage 98.5
 addProperty yarn-site.xml yarn.nodemanager.remote-app-log-dir /app-logs
-addProperty yarn-site.xml yarn.nodemanager.aux-services mapreduce.shuffle
+addProperty yarn-site.xml yarn.nodemanager.aux-services mapreduce_shuffle
 
 # MAPRED
 addProperty mapred-site.xml yarn.nodemanager.bind-host 0.0.0.0
