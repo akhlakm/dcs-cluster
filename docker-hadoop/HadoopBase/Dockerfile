@@ -49,3 +49,5 @@ RUN mkdir /hadoop-data
 
 ENV USER=root
 
+COPY core-site.xml $HADOOP_CONF_DIR/core-site.xml
+
