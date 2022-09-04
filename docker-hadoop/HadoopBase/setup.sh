@@ -41,7 +41,7 @@ addProperty yarn-site.xml yarn.resourcemanager.bind-host 0.0.0.0
 addProperty yarn-site.xml yarn.nodemanager.bind-host 0.0.0.0
 addProperty yarn-site.xml yarn.timeline-service.bind-host 0.0.0.0
 addProperty yarn-site.xml yarn.log-aggregation-enable true
-addProperty yarn-site.xml yarn.log.server.url http://historyserver:8188/applicationhistory/logs/
+addProperty yarn-site.xml yarn.log.server.url http://histmgr:8188/applicationhistory/logs/
 addProperty yarn-site.xml yarn.resourcemanager.recovery.enabled true
 addProperty yarn-site.xml yarn.resourcemanager.store.class org.apache.hadoop.yarn.server.resourcemanager.recovery.FileSystemRMStateStore
 addProperty yarn-site.xml yarn.resourcemanager.scheduler.class org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler
@@ -49,13 +49,13 @@ addProperty yarn-site.xml yarn.scheduler.capacity.root.default.maximum-allocatio
 addProperty yarn-site.xml yarn.scheduler.capacity.root.default.maximum-allocation-vcores 4
 addProperty yarn-site.xml yarn.resourcemanager.fs.state-store.uri /rmstate
 addProperty yarn-site.xml yarn.resourcemanager.system-metrics-publisher.enabled true
-addProperty yarn-site.xml yarn.resourcemanager.hostname resourcemanager
-addProperty yarn-site.xml yarn.resourcemanager.address resourcemanager:8032
-addProperty yarn-site.xml yarn.resourcemanager.scheduler.address resourcemanager:8030
-addProperty yarn-site.xml yarn.resourcemanager.resource-tracker.address resourcemanager:8031
+addProperty yarn-site.xml yarn.resourcemanager.hostname yarn
+addProperty yarn-site.xml yarn.resourcemanager.address yarn:8032
+addProperty yarn-site.xml yarn.resourcemanager.scheduler.address yarn:8030
+addProperty yarn-site.xml yarn.resourcemanager.resource-tracker.address yarn:8031
 addProperty yarn-site.xml yarn.timeline-service.enabled true
 addProperty yarn-site.xml yarn.timeline-service.generic-application-history.enabled true
-addProperty yarn-site.xml yarn.timeline-service.hostname historyserver
+addProperty yarn-site.xml yarn.timeline-service.hostname histmgr
 addProperty yarn-site.xml mapreduce.map.output.compress true
 addProperty yarn-site.xml mapred.map.output.compress.codec org.apache.hadoop.io.compress.SnappyCodec
 addProperty yarn-site.xml yarn.nodemanager.resource.memory-mb 16384
