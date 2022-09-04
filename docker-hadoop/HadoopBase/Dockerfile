@@ -1,8 +1,14 @@
-FROM ubuntu
+FROM debian
 
-RUN apt update && apt upgrade -y
+# do not install UI packages
+ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt install -y openjdk-8-jdk \
+# debian removed jdk-8 support, so use the older 'stretch' repo
+RUN apt-get update && apt-get install -y software-properties-common
+RUN apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main'
+RUN apt-get update
+
+RUN apt-get install -y openjdk-8-jdk \
 	net-tools \
 	curl \
 	netcat \
@@ -10,17 +16,17 @@ RUN apt install -y openjdk-8-jdk \
 	ssh \
 	pdsh
 
-ENV JAVA_HOME=/usr/lib/java/openjdk-8-jdk/
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
+# hadoop package integrity keys
 RUN curl -O https://dlcdn.apache.org/hadoop/common/KEYS
-
 RUN gpg --import KEYS
 
+# latest stable version
 ENV HADOOP_VERSION 3.3.4
-
 ENV HADOOP_URL https://dlcdn.apache.org/hadoop/common/stable/hadoop-${HADOOP_VERSION}.tar.gz
 
-
+# download, check integrity, extract
 RUN set -x \
     && curl -fSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
     && curl -fSL "$HADOOP_URL.asc" -o /tmp/hadoop.tar.gz.asc \
@@ -28,6 +34,7 @@ RUN set -x \
     && tar -xvf /tmp/hadoop.tar.gz -C /opt/ \
     && rm /tmp/hadoop.tar.gz*
 
+# symlink config directory
 RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop
 
 ENV HADOOP_HOME=/opt/hadoop-$HADOOP_VERSION
