@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  namenode:
+    image: akhlakm/hadoop-namenode
+    container_name: namenode
+    # restart: always
+    ports:
+      - 9870:9870
+      - 9000:9000
+    env_file:
+      - .env

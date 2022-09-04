@@ -17,12 +17,12 @@ RUN apt-get install -y openjdk-8-jdk \
 	pdsh
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+ENV PATH $JAVA_HOME/bin:$PATH
 
 # hadoop package integrity keys
 RUN curl -O https://dlcdn.apache.org/hadoop/common/KEYS
 RUN gpg --import KEYS
 
-# latest stable version
 ENV HADOOP_VERSION 3.3.4
 ENV HADOOP_URL https://dlcdn.apache.org/hadoop/common/stable/hadoop-${HADOOP_VERSION}.tar.gz
 
@@ -49,5 +49,10 @@ RUN mkdir /hadoop-data
 
 ENV USER=root
 
-COPY core-site.xml $HADOOP_CONF_DIR/core-site.xml
+# Setup configurations
+ADD setup.sh /setup.sh
+RUN chmod a+x /setup.sh
+RUN bash /setup.sh
 
+# Use entrypoint, so the current image is an executable, not a service
+# ENTRYPOINT [ "/setup.sh" ]
