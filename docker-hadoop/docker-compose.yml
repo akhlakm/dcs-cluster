@@ -8,5 +8,24 @@ services:
     ports:
       - 9870:9870
       - 9000:9000
-    env_file:
-      - .env
+    environment:
+      - CLUSTER_NAME=Shindook
+      - DOCKER_NETWORK=docker_hadoop
+
+  datanode1:
+    image: akhlakm/hadoop-datanode
+    container_name: datanode1
+    # restart: always
+    environment:
+      - CLUSTER_NAME=Shindook
+      - DOCKER_NETWORK=docker_hadoop
+      - DEPENDENCY="namenode:9000"
+
+  datanode2:
+    image: akhlakm/hadoop-datanode
+    container_name: datanode2
+    # restart: always
+    environment:
+      - CLUSTER_NAME=Shindook
+      - DOCKER_NETWORK=docker_hadoop
+      - DEPENDENCY="namenode:9000"

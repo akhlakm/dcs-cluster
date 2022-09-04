@@ -5,8 +5,8 @@ if [ -z "$CLUSTER_NAME" ]; then
     exit 2
 fi
 
-if [ "`ls -A $NAMENODE_DIR`" == "" ]; then
-    echo "Formatting namenode directory: $NAMENODE_DIR"
+if [ "`ls -A /hadoop/dfs/name`" == "" ]; then
+    echo "Formatting namenode directory: /hadoop/dfs/name"
     $HADOOP_HOME/bin/hdfs --config $HADOOP_CONF_DIR namenode -format $CLUSTER_NAME
 fi
 
