@@ -11,3 +11,9 @@ run:
 
 stop:
 	docker compose down
+
+fs:
+	# Mount the host home directory to /home
+	# Then files can be transfered to HDFS using `hadoop fs -fs http://localhost:9000/`
+	# You may set an alias to it.
+	docker run -it --network=host -v ~/:/home akhlakm/hadoop-base bash
