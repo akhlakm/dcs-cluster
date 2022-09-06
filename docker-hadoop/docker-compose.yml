@@ -42,17 +42,6 @@ services:
     networks:
       - bridge
 
-  nodemgr:
-    image: akhlakm/hadoop-nodemgr
-    container_name: nodemgr
-    # restart: always
-    ports:
-      - 9872:8042
-    environment:
-      - CLUSTER_NAME=Shindook
-    networks:
-      - bridge
-
   histmgr:
     image: akhlakm/hadoop-histmgr
     container_name: histmgr

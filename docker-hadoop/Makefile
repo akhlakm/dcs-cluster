@@ -3,7 +3,6 @@ build:
 	docker build -t akhlakm/hadoop-namenode ./NameNode
 	docker build -t akhlakm/hadoop-datanode ./DataNode
 	docker build -t akhlakm/hadoop-histmgr ./HistoryManager
-	docker build -t akhlakm/hadoop-nodemgr ./NodeManager
 	docker build -t akhlakm/hadoop-yarn ./Yarn
 
 run:
@@ -17,3 +16,4 @@ fs:
 	# Then files can be transfered to HDFS using `hadoop fs -fs http://localhost:9000/`
 	# You may set an alias to it.
 	docker run -it --network=host -v ~/:/home akhlakm/hadoop-base bash
+
