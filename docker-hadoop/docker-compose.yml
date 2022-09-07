@@ -4,6 +4,7 @@ services:
   namenode:
     image: akhlakm/hadoop-namenode
     container_name: namenode
+    hostname: namenode
     # restart: always
     ports:
       - 9870:9870
@@ -18,6 +19,7 @@ services:
   datanode1:
     image: akhlakm/hadoop-datanode
     container_name: datanode1
+    hostname: datanode1
     # restart: always
     ports:
       - 9001:8042
@@ -29,6 +31,7 @@ services:
   datanode2:
     image: akhlakm/hadoop-datanode
     container_name: datanode2
+    hostname: datanode2
     # restart: always
     ports:
       - 9002:8042
@@ -40,6 +43,7 @@ services:
   yarn:
     image: akhlakm/hadoop-yarn
     container_name: yarn
+    hostname: yarn
     restart: always
     ports:
       - 9871:8088
@@ -51,6 +55,7 @@ services:
   spark:
     image: akhlakm/hadoop-spark
     container_name: spark
+    hostname: spark
     # restart: always
     ports:
       - 9888:9888
