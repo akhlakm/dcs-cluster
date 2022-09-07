@@ -3,6 +3,7 @@ build:
 	docker build -t akhlakm/hadoop-namenode ./NameNode
 	docker build -t akhlakm/hadoop-datanode ./DataNode
 	docker build -t akhlakm/hadoop-yarn ./Yarn
+	docker build -t akhlakm/hadoop-spark ./Spark
 
 run:
 	docker compose up -d --remove-orphans

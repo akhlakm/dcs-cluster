@@ -5,6 +5,7 @@ RUN mkdir -p /hadoop/dfs/data
 
 HEALTHCHECK CMD curl -f http://localhost:8088/ || exit 1
 EXPOSE 8088
+EXPOSE 8032
 
 ADD resource_manager.sh /resource_manager.sh 
 RUN chmod a+x /resource_manager.sh

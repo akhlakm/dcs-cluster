@@ -48,6 +48,20 @@ services:
     networks:
       - bridge
 
+  spark:
+    image: akhlakm/hadoop-spark
+    container_name: spark
+    # restart: always
+    ports:
+      - 9888:9888
+      - 8080:8080
+    environment:
+      - CLUSTER_NAME=Shindook
+      - SPARK_MASTER_HOST=spark
+      - SPARK_MAIN=1
+    networks:
+      - bridge
+
 networks:
   bridge:
     driver: bridge
