@@ -19,9 +19,11 @@ function addProperty() {
 # HADOOP
 addProperty core-site.xml fs.defaultFS ${DEFAULT_FS}
 addProperty core-site.xml hadoop.http.staticuser.user root
-addProperty core-site.xml hadoop.proxyuser.hue.hosts *
-addProperty core-site.xml hadoop.proxyuser.hue.groups *
 addProperty core-site.xml io.compression.codecs org.apache.hadoop.io.compress.SnappyCodec
+# allow all group user to mount NFS
+addProperty core-site.xml hadoop.proxyuser.nfsserver.groups "*"
+# allow any host to mount NFS
+addProperty core-site.xml hadoop.proxyuser.nfsserver.hosts "*"
 
 # HDFS
 addProperty hdfs-site.xml dfs.namenode.name.dir /hadoop/dfs/name
@@ -35,13 +37,14 @@ addProperty hdfs-site.xml dfs.datanode.use.datanode.hostname true
 addProperty hdfs-site.xml dfs.webhdfs.enabled true
 addProperty hdfs-site.xml dfs.permissions.enabled false
 addProperty hdfs-site.xml dfs.namenode.datanode.registration.ip-hostname-check false
+# allow any host to read and write NFS
+addProperty hdfs-site.xml nfs.exports.allowed.hosts "* rw"
 
 # YARN
 addProperty yarn-site.xml yarn.resourcemanager.bind-host 0.0.0.0
 addProperty yarn-site.xml yarn.nodemanager.bind-host 0.0.0.0
 addProperty yarn-site.xml yarn.timeline-service.bind-host 0.0.0.0
 addProperty yarn-site.xml yarn.log-aggregation-enable true
-addProperty yarn-site.xml yarn.log.server.url http://histmgr:8188/applicationhistory/logs/
 addProperty yarn-site.xml yarn.resourcemanager.recovery.enabled true
 addProperty yarn-site.xml yarn.resourcemanager.store.class org.apache.hadoop.yarn.server.resourcemanager.recovery.FileSystemRMStateStore
 addProperty yarn-site.xml yarn.resourcemanager.scheduler.class org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler
@@ -55,7 +58,6 @@ addProperty yarn-site.xml yarn.resourcemanager.scheduler.address yarn:8030
 addProperty yarn-site.xml yarn.resourcemanager.resource-tracker.address yarn:8031
 addProperty yarn-site.xml yarn.timeline-service.enabled true
 addProperty yarn-site.xml yarn.timeline-service.generic-application-history.enabled true
-addProperty yarn-site.xml yarn.timeline-service.hostname histmgr
 addProperty yarn-site.xml mapreduce.map.output.compress true
 addProperty yarn-site.xml mapred.map.output.compress.codec org.apache.hadoop.io.compress.SnappyCodec
 addProperty yarn-site.xml yarn.nodemanager.resource.memory-mb 16384
@@ -76,4 +78,5 @@ addProperty mapred-site.xml yarn.app.mapreduce.am.env HADOOP.MAPRED.HOME=/opt/ha
 addProperty mapred-site.xml mapreduce.map.env HADOOP.MAPRED.HOME=/opt/hadoop-3.3.4/
 addProperty mapred-site.xml mapreduce.reduce.env HADOOP.MAPRED.HOME=/opt/hadoop-3.3.4/
 
+# Allow execution of other commands, e.g. bash
 exec $@

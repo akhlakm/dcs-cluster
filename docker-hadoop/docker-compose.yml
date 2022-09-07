@@ -8,6 +8,8 @@ services:
     ports:
       - 9870:9870
       - 9000:9000
+      - 2049:2049
+      - 4242:4242
     environment:
       - CLUSTER_NAME=Shindook
     networks:
@@ -17,6 +19,8 @@ services:
     image: akhlakm/hadoop-datanode
     container_name: datanode1
     # restart: always
+    ports:
+      - 9001:8042
     environment:
       - CLUSTER_NAME=Shindook
     networks:
@@ -26,6 +30,8 @@ services:
     image: akhlakm/hadoop-datanode
     container_name: datanode2
     # restart: always
+    ports:
+      - 9002:8042
     environment:
       - CLUSTER_NAME=Shindook
     networks:
@@ -34,20 +40,9 @@ services:
   yarn:
     image: akhlakm/hadoop-yarn
     container_name: yarn
-    # restart: always
+    restart: always
     ports:
       - 9871:8088
-    environment:
-      - CLUSTER_NAME=Shindook
-    networks:
-      - bridge
-
-  histmgr:
-    image: akhlakm/hadoop-histmgr
-    container_name: histmgr
-    # restart: always
-    ports:
-      - 9873:8188
     environment:
       - CLUSTER_NAME=Shindook
     networks:
