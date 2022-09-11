@@ -6,7 +6,6 @@ Install `make` and `docker-ce` first.
 Usage:
 
 ```bash
-make build
 make hadoop
 make spark
 ```
@@ -26,3 +25,4 @@ make postgres
 - A jupyter lab instance serving PySpark `http://<ip_address>:7088`.
 - Spark History manager at `http://<ip_address>:7099`.
 
+Copyright (c) 2022 Akhlak Mahmood
