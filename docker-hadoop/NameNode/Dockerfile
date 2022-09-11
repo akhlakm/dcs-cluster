@@ -1,5 +1,7 @@
 FROM akhlakm/hadoop-base
 
+ENV CLUSTER_NAME Shindook
+
 # make sure port is not being used
 HEALTHCHECK CMD curl -f http://localhost:9870/ || exit 1
 
