@@ -16,8 +16,6 @@ RUN mv /opt/spark* /opt/spark
 
 RUN apt-get install -y pip
 RUN pip install jupyterlab pandas matplotlib scikit-learn sqlalchemy
-ENV PYSPARK_DRIVER_PYTHON='jupyter-lab'
-ENV PYSPARK_DRIVER_PYTHON_OPTS='--allow-root --NotebookApp.token='' --NotebookApp.password='' --no-browser --ip 0.0.0.0 --port=9888'
 
 ENV SPARK_HOME=/opt/spark
 ENV PATH=$SPARK_HOME/sbin:$SPARK_HOME/bin:$PATH
