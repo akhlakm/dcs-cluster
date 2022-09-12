@@ -28,6 +28,7 @@ ENV PYTHONPATH=${SPARK_HOME}/python/lib/py4j-0.10.9.5-src.zip:$PYTHONPATH
 
 COPY spark-defaults.conf /opt/spark/conf/spark-defaults.conf
 COPY spark-env.sh /opt/spark/conf/spark-env.sh
+COPY log4j.properties /opt/spark/conf/log4j.properties
 
 EXPOSE 7077
 EXPOSE 9888
