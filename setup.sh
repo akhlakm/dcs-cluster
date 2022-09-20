@@ -27,5 +27,3 @@ fi
 BRANCH="stream"
 REPO="https://github.com/akhlakm/home-cluster.git"
 sudo ansible-pull -U $REPO -C $BRANCH -i hosts.yml pb-setup.yml
-
-[[ -f $HOME/.ssh/authorized_keys ]] || echo "Note: No public ssh keys found!"
