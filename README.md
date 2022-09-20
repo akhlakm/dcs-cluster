@@ -4,7 +4,7 @@ These scripts will setup a virtual cluster of the latest version of Apache Hadoo
 ## USAGE
 
 ```sh
-sudo curl https://raw.githubusercontent.com/akhlakm/home-cluster/stream/setup.sh | bash
+curl https://raw.githubusercontent.com/akhlakm/home-cluster/stream/setup.sh | sudo bash
 ```
 
 Copyright (c) 2022 Akhlak Mahmood
