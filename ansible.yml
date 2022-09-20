@@ -1,6 +1,7 @@
 ---
-- hosts: localhost
+- hosts: all
   become: true
+  connection: local
   tasks:
     - name: apt update
       apt: update_cache=yes
