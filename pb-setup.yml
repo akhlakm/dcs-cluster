@@ -1,4 +1,12 @@
+##
+## Setup a node with users, ssh, networking, ansible-pull etc.
+##
+## USAGE:
+## sudo ansible-playbook -i hosts.yml pb-setup.yml
+##
+
 ---
+
 - hosts: localhost
   become: true
   connection: local

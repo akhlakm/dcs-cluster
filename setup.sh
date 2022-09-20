@@ -22,7 +22,7 @@ else
     die 2 "Neither APT nor DNF found"
 fi
 
-BRANCH="main"
+BRANCH="stream"
 REPO="https://github.com/akhlakm/home-cluster.git"
 sudo ansible-pull -U $REPO -C $BRANCH -i hosts.yml pb-setup.yml
 
