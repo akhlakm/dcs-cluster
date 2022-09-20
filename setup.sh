@@ -7,7 +7,7 @@ havecmd() {
     type "$1" &> /dev/null
 }
 die() {
-    echo "ERROR: $@" && exit $1
+    echo -e "\nERROR: $@" && exit $1
 }
 
 [[ $EUID -eq 0 ]] || die 1 "Please run with SUDO"
