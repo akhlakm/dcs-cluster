@@ -14,7 +14,7 @@ die() {
 
 if havecmd apt; then
     sudo apt update
-    sudo apt install -y git ansible openssh-server
+    sudo apt install -y git ansible
 elif havecmd dnf; then
     sudo dnf update
     sudo dnf install epel-release

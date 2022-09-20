@@ -32,7 +32,7 @@
 
   rescue:
     - name: no authorized keys
-      fail:
+      debug:
         msg: >
           No ssh public key is found in /home/akhlak.
-          Please upload and rerun.
+          Please upload a public key for secure access.
