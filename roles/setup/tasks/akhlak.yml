@@ -1,9 +1,16 @@
 - name: user akhlak
   user:
     name: akhlak
-    group: akhlak
     groups: akhlak,ansible,{{ sudo_group }}
     state: present
+
+- name: sudoers file akhlak
+  copy:
+      dest: /etc/sudoers.d/akhlak
+      content: "akhlak ALL=(ALL) NOPASSWD: ALL"
+      owner: root
+      group: root
+      mode: 0440
 
 - name: bashrc (debian)
   copy:
@@ -17,8 +24,15 @@
     dest: /etc/profile.d/bashrc.sh
   when: ansible_facts['os_family']|lower == 'redhat'
 
-- name: akhlak | public key
-  authorized_key:
-    user: akhlak
-    state: present
-    key: "{{ lookup('file', '/home/akhlak/.ssh/id_ed25519.pub') }}"
+- block:
+  - name: ssh public key
+    file:
+      path: "/home/akhlak/.ssh/authorized_keys"
+      state: file
+
+  rescue:
+    - name: no authorized keys
+      fail:
+        msg: >
+          No ssh public key is found in /home/akhlak.
+          Please upload and rerun.

@@ -1,8 +1,7 @@
 - name: user ansible
   user:
     name: ansible
-    group: ansible
-    groups: "{{ sudo_group }}"
+    groups: ansible,{{ sudo_group }}
     state: present
 
 - name: /var/log/ansible.log file
@@ -27,8 +26,4 @@
       group: root
       mode: 0440
 
-- name: ansible | public key
-  authorized_key:
-    user: ansible
-    state: present
-    key: "{{ lookup('file', '/home/ansible/.ssh/id_ed25519.pub') }}"
+

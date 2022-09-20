@@ -1,7 +1,11 @@
 ---
-- hosts: all
+- hosts: localhost
   become: true
   connection: local
+
+  vars:
+    ip_address: 192.168.100.101
+    eth_device: enp0s8
 
   tasks:
     - name: debug
