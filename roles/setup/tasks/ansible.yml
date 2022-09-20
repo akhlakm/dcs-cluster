@@ -2,7 +2,7 @@
   user:
     name: ansible
     group: ansible
-    groups: {{ sudo_group }}
+    groups: "{{ sudo_group }}"
     state: present
 
 - name: /var/log/ansible.log file
