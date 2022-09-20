@@ -1,0 +1,8 @@
+---
+- name: apt_update
+  apt: update_cache=yes
+
+- name: restart_sshd
+  service:
+    name: "{{ sshd_service }}"
+    state: restarted

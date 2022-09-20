@@ -1,0 +1,34 @@
+- name: user ansible
+  user:
+    name: ansible
+    group: ansible
+    groups: ansible,{{ sudo_group }}
+    state: present
+
+- name: /var/log/ansible.log file
+  file:
+    path: /var/log/ansible.log
+    owner: ansible
+    group: ansible
+    mode: 0644
+    state: touch
+  changed_when: false
+
+- name: no etc/ansible/
+  file:
+    path: /etc/ansible
+    state: absent
+
+- name: sudoers file ansible
+  copy:
+      dest: /etc/sudoers.d/ansible
+      content: "ansible ALL=(ALL) NOPASSWD: ALL"
+      owner: root
+      group: root
+      mode: 0440
+
+- name: ansible | public key
+  authorized_key:
+    user: ansible
+    state: present
+    key: "{{ lookup('file', '/home/ansible/.ssh/id_ed25519.pub') }}"

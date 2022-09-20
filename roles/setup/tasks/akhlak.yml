@@ -1,0 +1,24 @@
+- name: user akhlak
+  user:
+    name: akhlak
+    group: akhlak
+    groups: akhlak,ansible,{{ sudo_group }}
+    state: present
+
+- name: bashrc (debian)
+  copy:
+    src: bashrc
+    dest: /home/akhlak/.bashrc
+  when: ansible_facts['os_family']|lower == 'debian'
+
+- name: bashrc (redhat)
+  copy:
+    src: bashrc
+    dest: /etc/profile.d/bashrc.sh
+  when: ansible_facts['os_family']|lower == 'redhat'
+
+- name: akhlak | public key
+  authorized_key:
+    user: akhlak
+    state: present
+    key: "{{ lookup('file', '/home/akhlak/.ssh/id_ed25519.pub') }}"

@@ -1,0 +1,8 @@
+- name: static network (debian)
+  tags: system, network
+  template:
+    src: static-net-debian.j2
+    dest: /etc/systemd/network/static.network
+    owner: root 
+    mode: 0644
+  when: eth_device is defined

@@ -1,0 +1,5 @@
+ssh_port: 22
+ssh_users: "akhlak ansible"
+passwd_auth: yes 
+nameserver1: 1.1.1.1
+nameserver2: 8.8.8.8
