@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ## USAGE:
-## sudo curl https://github.com/akhlakm/home-cluster/blob/main/setup.sh | bash
+## sudo curl https://github.com/akhlakm/home-cluster/raw/stream/setup.sh | bash
 
 havecmd() {
     type "$1" &> /dev/null
