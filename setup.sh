@@ -17,6 +17,8 @@ if havecmd apt; then
     sudo apt install -y git ansible openssh-server
 elif havecmd dnf; then
     sudo dnf update
+    sudo dnf install epel-release
+    sudo dnf update
     sudo dnf install git ansible
 else
     die 2 "Neither APT nor DNF found"
