@@ -1,9 +1,11 @@
 # Load common vars
-- include_vars: "common.yml"
+- name: load common vars
+  include_vars: "common.yml"
   tags: always
 
 # Load OS specific vars
-- include_vars: "{{ ansible_facts['os_family']|lower }}.yml"
+- name: load os vars
+  include_vars: "{{ ansible_facts['os_family']|lower }}.yml"
   tags: always
 
 - block:
@@ -25,5 +27,5 @@
   when: ansible_facts['os_family']|lower == 'debian'
 
 - import_tasks: ssh-setup.yml
-- import_tasks: akhlak.yml
 - import_tasks: ansible.yml
+- import_tasks: akhlak.yml
