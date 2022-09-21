@@ -115,23 +115,6 @@ git_prompt() {
 	unset git_prompt
 }
 
-# Makefile at the home directory.
-# Useful to automate setups.
-# ---------------------------------
-if havecmd make; then
-	if [[ ! -f ~/Makefile ]]; then
-		if [[ -f ~/Dot_Files/Makefile ]]; then 
-			ln -s Dot_Files/Makefile Makefile
-		else
-			echo "No Makefile found in the home directory."
-			echo "You can get it from https://github.com/akhlakm/Dot_Files"
-		fi
-	fi
-else
-	echo "Make does not exist. Attempting to install ..."
-	sudo apt install make
-fi
-
 # Git helpers
 # Some later items depend on it.
 # It should be configured first.
