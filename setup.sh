@@ -27,8 +27,13 @@ fi
 BRANCH="stream"
 REPO="https://github.com/akhlakm/home-cluster.git"
 
-if [[ -d home-cluster ]] || git clone --depth 5 --branch $BRANCH $REPO
+if [[ -d home-cluster ]]; then
+    cd home-cluster
+    git pull
+else
+    git clone --depth 5 --branch $BRANCH $REPO
+    cd home-cluster
+fi
 
-cd home-cluster
 git checkout $BRANCH
-ansible-playbook -i home-cluster/hosts.yml home-cluster/pb-setup.yml
+ansible-playbook -i hosts.yml pb-setup.yml
