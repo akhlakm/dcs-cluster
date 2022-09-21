@@ -10,11 +10,10 @@ if [ "`ls -A /hadoop/dfs/name`" == "" ]; then
     $HADOOP_HOME/bin/hdfs --config $HADOOP_CONF_DIR namenode -format $CLUSTER_NAME
 fi
 
-$HADOOP_HOME/bin/hdfs --config $HADOOP_CONF_DIR --daemon start portmap
-
 $HADOOP_HOME/bin/hdfs --config $HADOOP_CONF_DIR namenode &
 
-sleep 5
-$HADOOP_HOME/bin/hdfs --config $HADOOP_CONF_DIR nfs3 
+# $HADOOP_HOME/bin/hdfs --config $HADOOP_CONF_DIR --daemon start portmap
+# sleep 5
+# $HADOOP_HOME/bin/hdfs --config $HADOOP_CONF_DIR nfs3 
 
 wait

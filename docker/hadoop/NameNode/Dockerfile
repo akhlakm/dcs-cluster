@@ -7,14 +7,13 @@ HEALTHCHECK CMD curl -f http://localhost:9870/ || exit 1
 
 # create namenode directory
 RUN mkdir -p /hadoop/dfs/name
+RUN mkdir -p /run/sendsigs.omit.d
 
-# HDFS at 9000, webserver at 9870
-EXPOSE 9000
-EXPOSE 9870
+RUN echo "#!/bin/sh\nexit 0"
 
-# NFS
-EXPOSE 2049
-EXPOSE 4242
+RUN apt-get install -y rpcbind jsvc
+ENV HDFS_NFS3_SECURE_USER root
+ENV JSVC_HOME /usr/bin/
 
 # copy the service entry
 ADD namenode.sh /namenode.sh 

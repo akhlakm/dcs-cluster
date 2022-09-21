@@ -9,26 +9,30 @@ port.sparkHist = 7099
 port.hdfs = 9000
 port.namenode = 9001
 port.yarn = 9002
+port.nfs = 2049
 
 hadoop:
-	docker build -t akhlakm/hadoop-base docker-hadoop/HadoopBase
+	docker build -t akhlakm/hadoop-base hadoop/HadoopBase
 	docker stop namenode || true
 	docker rm namenode || true
 
-	docker build -t akhlakm/hadoop-namenode docker-hadoop/NameNode
+	docker build -t akhlakm/hadoop-namenode hadoop/NameNode
 	docker run -td \
+		-p $(port.nfs):2049 \
 		-p $(port.hdfs):9000 \
+		-p 9999:50079 \
 		-p $(port.namenode):9870 \
 		-v $(data)/hdfs:/hadoop/dfs \
 		--restart=unless-stopped \
 		--network=docker \
 		--hostname=namenode \
 		--name=namenode \
+		--privileged=true \
 		akhlakm/hadoop-namenode
 
 	docker stop datanode || true
 	docker rm datanode || true
-	docker build -t akhlakm/hadoop-datanode docker-hadoop/DataNode
+	docker build -t akhlakm/hadoop-datanode hadoop/DataNode
 	docker run -td \
 		-v $(data)/hdfs:/hadoop/dfs \
 		--restart=unless-stopped \
@@ -39,14 +43,14 @@ hadoop:
 
 	docker stop yarn || true
 	docker rm yarn || true
-	docker build -t akhlakm/hadoop-yarn docker-hadoop/Yarn
-	docker run -td \
-		-p $(port.yarn):8088 \
-		--restart=unless-stopped \
-		--network=docker \
-		--hostname=yarn \
-		--name=yarn \
-		akhlakm/hadoop-yarn
+	# docker build -t akhlakm/hadoop-yarn hadoop/Yarn
+	# docker run -td \
+	# 	-p $(port.yarn):8088 \
+	# 	--restart=unless-stopped \
+	# 	--network=docker \
+	# 	--hostname=yarn \
+	# 	--name=yarn \
+	# 	akhlakm/hadoop-yarn
 
 spark:
 	docker stop spark || true
