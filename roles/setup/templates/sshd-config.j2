@@ -1,35 +1,22 @@
-# See https://man.openbsd.org/sshd_config.5
+#SyslogFacility AUTH
+#LogLevel INFO
 
-Banner /etc/issue.net
-PrintMOTD no
+#LoginGraceTime 2m
+#StrictModes yes
+#MaxAuthTries 6
+#MaxSessions 10
 
-Port {{ ssh_port | default(22) }}
-Protocol 2
-
-# Authentication:
-AllowUsers {{ ssh_users | default("akhlak ansible") }}
-ChallengeResponseAuthentication no
-HostbasedAuthentication no
-LoginGraceTime 120
-PasswordAuthentication {{ passwd_auth | default("no") }}
-PermitEmptyPasswords no
 PermitRootLogin no
 PubkeyAuthentication yes
-StrictModes yes
+AuthorizedKeysFile     .ssh/authorized_keys
 UsePAM no
+X11Forwarding yes
+PrintMotd no
+#Banner none
 
-# Security
-HostKey /etc/ssh/ssh_host_dsa_key
-HostKey /etc/ssh/ssh_host_ecdsa_key
-HostKey /etc/ssh/ssh_host_ed25519_key
-HostKey /etc/ssh/ssh_host_rsa_key
-IgnoreRhosts yes
-
-# Misc. options
+# Allow client to pass locale environment variables
 AcceptEnv LANG LC_*
-TCPKeepAlive yes
-Subsystem sftp {{ sftp_path }}
 
-# Logging
-SyslogFacility AUTH
-LogLevel INFO
+Subsystem sftp  {{ sftp_path }}
+PasswordAuthentication yes
+PermitEmptyPasswords {{ passwd_auth }}
