@@ -75,4 +75,5 @@
         name: helloworld
         image: hello-world
         state: started
+      changed_when: false
 
