@@ -7,9 +7,18 @@
   notify: restart_NetworkManager
   when: eth_device is defined
 
+- name: network manager (redhat)
+  template:
+    src: network-manager.j2
+    dest: /etc/NetworkManager/NetworkManager.conf
+    owner: root 
+    mode: 0644
+  notify: restart_NetworkManager
+
 - name: resolv.conf (redhat)
   template:
     src: redhat-resolv.conf.j2
     dest: /etc/resolv.conf
     owner: root
     mode: 0644
+  notify: restart_NetworkManager
