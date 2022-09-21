@@ -11,6 +11,7 @@
   connection: local
 
   vars:
+    ## Set these values if you have a static net
     # ip_address: 192.168.100.100
     # eth_device: enp0s8
 
