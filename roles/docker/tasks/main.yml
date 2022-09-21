@@ -57,6 +57,7 @@
           Docker service does not seem to be running.
           Please check manually. 
 
+# For ansible docker_container module
 - block:
     - name: pip installed
       package:
@@ -66,3 +67,12 @@
     - name: docker SDK installed
       pip:
         name: docker
+
+# Test the hello world container
+- block:
+    - name: docker hello world
+      docker_container:
+        name: helloworld
+        image: hello-world
+        state: started
+
