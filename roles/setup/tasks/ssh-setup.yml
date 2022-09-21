@@ -12,3 +12,5 @@
     name: "{{ sshd_service }}"
     enabled: yes
     state: started
+
+- meta: flush_handlers
