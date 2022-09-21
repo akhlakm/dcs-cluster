@@ -1,6 +1,6 @@
 - block:
 
-  - name: Ensure docker is installed
+  - name: docker is installed
     shell: docker --version
     register: cmd_result
     failed_when: "cmd_result.rc != 0"
@@ -17,23 +17,23 @@
     - name: execute get-docker
       shell: /tmp/get-docker.sh > get-docker.log
 
-    - name: ensure docker is installed
+    - name: docker is installed
       shell: docker --version
       register: cmd_result
       failed_when: "cmd_result.rc != 0"
 
-    - name: ensure docker group exists
+    - name: docker group exists
       group:
         name: docker
         state: present
 
-    - name: ensure akhlak a member of the docker group 
+    - name: akhlak a member of the docker group 
       user:
         name: akhlak
         groups: docker
         append: yes
 
-    - name: ensure ansible a member of the docker group 
+    - name: ansible a member of the docker group 
       user:
         name: ansible
         groups: docker
@@ -51,9 +51,18 @@
       state: started
 
   rescue:
-    - name: notify docker service error
+    - name: docker service error
       debug:
         msg: |
           Docker service does not seem to be running.
           Please check manually. 
 
+- block:
+    - name: pip installed
+      package:
+        name: python3-pip
+        state: present
+
+    - name: docker SDK installed
+      pip:
+        name: docker

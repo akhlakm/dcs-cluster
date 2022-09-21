@@ -3,6 +3,8 @@
 - hosts: localhost
   become: true
   connection: local
+  environment:
+    PATH: "{{ lookup('env', 'HOME') }}/.local/bin:{{ ansible_env.PATH }}"
 
   roles:
     - role: docker
