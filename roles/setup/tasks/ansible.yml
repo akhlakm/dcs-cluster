@@ -15,7 +15,7 @@
 
 - name: no etc/ansible/
   file:
-    path: /etc/ansible
+    path: /etc/ansible/
     state: absent
 
 - name: sudoers file ansible
@@ -25,5 +25,4 @@
       owner: root
       group: root
       mode: 0440
-
 
