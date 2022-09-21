@@ -1,3 +1,8 @@
+## Entrypoint for ansible-pull. Testing can be done by running as a playbook.
+##
+## USAGE:
+## sudo ansible-playbook -i hosts.yml local.yml
+##
 ---
 
 - hosts: localhost
