@@ -1,7 +1,7 @@
 - name: user akhlak
   user:
     name: akhlak
-    groups: akhlak,ansible,{{ sudo_group }}
+    groups: ansible,{{ sudo_group }}
     state: present
 
 - name: sudoers file akhlak
