@@ -4,7 +4,6 @@
 ## USAGE:
 ## sudo ansible-playbook -i hosts.yml pb-setup.yml
 ##
-
 ---
 
 - hosts: localhost
@@ -12,12 +11,18 @@
   connection: local
 
   vars:
+    # ip_address: 192.168.100.100
     eth_device: enp0s8
 
-  tasks:
-    - name: debug
-      debug:
-        msg: "The IP is {{ ip_address }}"
+  pre_tasks:
+    - block:
+      - debug: msg="The IP is {{ ip_address }}"
+      rescue:
+        - name: ip_address not set
+          fail:
+            msg: >
+              "IP address for the current host is not defined."
+              "Please edit pb-setup.yml and set ip address first."
 
   roles:
     - role: setup
