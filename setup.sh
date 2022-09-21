@@ -14,7 +14,7 @@ die() {
 
 if havecmd apt; then
     sudo apt update
-    sudo apt install -y git ansible
+    sudo apt install git ansible
 elif havecmd dnf; then
     sudo dnf update
     sudo dnf install epel-release
@@ -26,4 +26,11 @@ fi
 
 BRANCH="stream"
 REPO="https://github.com/akhlakm/home-cluster.git"
-sudo ansible-pull -U $REPO -C $BRANCH -i hosts.yml pb-setup.yml
+
+# USE PULL
+# sudo ansible-pull -U $REPO -C $BRANCH -i hosts.yml pb-setup.yml
+
+# USE PLAYBOOK
+# If you need to modify something before running
+git clone --depth 5 --branch $BRANCH $REPO
+# ansible-playbook -i home-cluster/hosts.yml home-cluster/pb-setup.yml
