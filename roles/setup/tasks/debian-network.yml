@@ -8,3 +8,14 @@
   notify: restart_networkd
   when: eth_device is defined
 
+- name: remove resolv.conf (debian)
+  file:
+    path: /etc/resolv.conf
+    state: absent
+
+- name: resolv.conf (debian)
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+    owner: root
+    mode: 0644
