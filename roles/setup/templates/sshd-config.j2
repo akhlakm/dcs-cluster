@@ -9,7 +9,7 @@
 PermitRootLogin no
 PubkeyAuthentication yes
 AuthorizedKeysFile     .ssh/authorized_keys
-UsePAM no
+UsePAM yes
 X11Forwarding yes
 PrintMotd no
 #Banner none
@@ -18,5 +18,5 @@ PrintMotd no
 AcceptEnv LANG LC_*
 
 Subsystem sftp  {{ sftp_path }}
-PasswordAuthentication yes
-PermitEmptyPasswords {{ passwd_auth }}
+PasswordAuthentication {{ passwd_auth }}
+PermitEmptyPasswords no
