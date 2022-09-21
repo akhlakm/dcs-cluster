@@ -16,12 +16,12 @@
 
   pre_tasks:
     - block:
-      - debug: msg="The IP is {{ ip_address }}"
+      - debug: msg="IP address is {{ ip_address }}"
+        when: eth_device is defined
       rescue:
-        - name: ip_address not set
-          fail:
+        - fail:
             msg: >
-              "IP address for the current host is not defined."
+              "IP address for the device '{{ eth_device }}' is not defined."
               "Please edit pb-setup.yml and set ip address first."
 
   roles:
