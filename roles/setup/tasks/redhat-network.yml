@@ -5,3 +5,10 @@
     owner: root 
     mode: 0644
   when: eth_device is defined
+
+- name: resolv.conf (redhat)
+  template:
+    src: redhat-resolv.conf.j2
+    dest: /etc/resolv.conf
+    owner: root
+    mode: 0644
