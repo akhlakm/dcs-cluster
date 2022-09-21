@@ -14,12 +14,12 @@ die() {
 
 if havecmd apt; then
     sudo apt update
-    sudo apt install git ansible
+    sudo apt install -y git ansible
 elif havecmd dnf; then
     sudo dnf update
-    sudo dnf install epel-release
+    sudo dnf install -y epel-release
     sudo dnf update
-    sudo dnf install git ansible
+    sudo dnf install -y git ansible
 else
     die 2 "Neither APT nor DNF found"
 fi
