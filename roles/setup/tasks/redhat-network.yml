@@ -4,6 +4,7 @@
     dest: /etc/sysconfig/network-scripts/ifcfg-{{ eth_device }}
     owner: root 
     mode: 0644
+  notify: restart_NetworkManager
   when: eth_device is defined
 
 - name: resolv.conf (redhat)
