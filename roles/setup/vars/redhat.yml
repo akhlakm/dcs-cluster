@@ -1,3 +1,4 @@
 sudo_group: wheel
 sshd_service: sshd
 sftp_path: /usr/libexec/openssh/sftp-server
+nfs_client_package: nfs-utils

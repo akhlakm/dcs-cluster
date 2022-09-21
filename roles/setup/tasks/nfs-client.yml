@@ -1,0 +1,14 @@
+- name: nfs client
+  package:
+    name: "{{ nfs_client_package }}"
+    state: present
+
+- name: nfs mount path
+  file:
+    path: /mnt/nfs/
+    state: directory
+    mode: 0777
+
+- name: mount NFS
+  command: mount "{{ nfs_server_ip }}:{{ nfs_server_path }}" /mnt/nfs/
+  when: nfs_server_ip is defined

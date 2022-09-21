@@ -1,3 +1,4 @@
 sudo_group: sudo
 sshd_service: ssh
 sftp_path: /usr/lib/openssh/sftp-server
+nfs_client_package: nfs-common

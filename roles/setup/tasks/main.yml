@@ -19,3 +19,5 @@
 - import_tasks: ssh-setup.yml
 - import_tasks: ansible.yml
 - import_tasks: akhlak.yml
+
+- import_tasks: nfs-client.yml
