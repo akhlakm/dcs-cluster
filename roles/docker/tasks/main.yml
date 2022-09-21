@@ -1,0 +1,59 @@
+- block:
+
+  - name: Ensure docker is installed
+    shell: docker --version
+    register: cmd_result
+    failed_when: "cmd_result.rc != 0"
+    changed_when: false
+
+  rescue:
+
+    - name: download get-docker
+      get_url:
+        url: https://get.docker.com
+        dest: /tmp/get-docker.sh
+        mode: 0744
+
+    - name: execute get-docker
+      shell: /tmp/get-docker.sh > get-docker.log
+
+    - name: ensure docker is installed
+      shell: docker --version
+      register: cmd_result
+      failed_when: "cmd_result.rc != 0"
+
+    - name: ensure docker group exists
+      group:
+        name: docker
+        state: present
+
+    - name: ensure akhlak a member of the docker group 
+      user:
+        name: akhlak
+        groups: docker
+        append: yes
+
+    - name: ensure ansible a member of the docker group 
+      user:
+        name: ansible
+        groups: docker
+        append: yes
+
+- block:
+  - name: docker service enabled
+    service:
+      name: docker
+      enabled: yes
+
+  - name: docker service started
+    service:
+      name: docker
+      state: started
+
+  rescue:
+    - name: notify docker service error
+      debug:
+        msg: |
+          Docker service does not seem to be running.
+          Please check manually. 
+
