@@ -55,13 +55,21 @@ check_install_ansible() {
 check_etc_hosts() {
     # Check if all the host IPs are in /etc/hosts
     echo "IP addresses defined in /etc/hosts ..."
+
+    # Build the etc_hosts
+    echo "# Auto generated /etc/hosts by ./setup.sh" > etc_hosts
+    echo "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4" >> etc_hosts
+    echo "::1         localhost localhost.localdomain localhost6 localhost6.localdomain6" >> etc_hosts
+
+    # Check each defined host
     for host in host_vars/*;
     do
         host=$(basename $host)
         case `grep $host /etc/hosts >/dev/null; echo $?` in
             0)
                 # code if found
-                grep $host /etc/hosts
+                grep $host /etc/hosts | tee -a etc_hosts
+
                 # ping once
                 if ping -q -c 1 $host > /dev/null
                 then
@@ -81,6 +89,11 @@ check_etc_hosts() {
                 ;;
         esac
     done
+
+    echo "OK -- etc_hosts generated. Please update if necessary."
+    echo "------------------------------------------------------"
+    cat etc_hosts
+    echo "------------------------------------------------------"
 }
 
 check_ssh_pubkey() {
@@ -102,4 +115,4 @@ check_install_ansible
 ansible_config
 check_etc_hosts
 check_ssh_pubkey
-check_ansible_ping
+# check_ansible_ping
