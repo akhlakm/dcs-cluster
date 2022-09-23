@@ -1,0 +1,27 @@
+- name: ansible user
+  user:
+    name: "{{ ansible_user }}"
+    groups: "{{ sudo_group }}"
+    state: present
+    append: yes
+
+- name: sudoers file of ansible user
+  copy:
+      dest: "/etc/sudoers.d/{{ ansible_user }}"
+      content: "{{ ansible_user }} ALL=(ALL) NOPASSWD: ALL"
+      owner: root
+      group: root
+      mode: 0440
+
+- name: bashrc (debian)
+  copy:
+    src: bashrc
+    dest: "/home/{{ ansible_user }}/.bashrc"
+  when: ansible_facts['os_family']|lower == 'debian'
+
+- name: bashrc (redhat)
+  copy:
+    src: bashrc
+    dest: /etc/profile.d/bashrc.sh
+  when: ansible_facts['os_family']|lower == 'redhat'
+

@@ -19,7 +19,7 @@
   when: ansible_facts['os_family']|lower == 'debian'
 
 - import_tasks: ssh-setup.yml
-- import_tasks: user-akhlak.yml
+- import_tasks: ansible-user.yml
 
 - block:
   - import_tasks: nfs-client.yml
