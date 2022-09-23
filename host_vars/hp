@@ -1,5 +1,5 @@
 ---
-# If you need to set static IP to a network device, set these values.
+# Set static IP to a network device: uncomment these values and run pb-setup.
 # eth_device: enp1s8
 # ip_address: 192.168.100.100
 
