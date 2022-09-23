@@ -1,0 +1,7 @@
+[all]
+legion
+hp
+mini
+
+[all:vars]
+branch = stream
