@@ -4,6 +4,12 @@
     src: "{{ playbook_dir }}/etc_hosts"
     dest: /etc/hosts
 
+- name: ping installed
+  apt:
+    name: iputils-ping
+    state: present
+  when: ansible_facts['os_family']|lower == 'debian'
+
 - name: ping all hosts
   shell: "ping -q -c 1 {{ item }} > /dev/null"
   with_items: "{{ groups['all'] }}"
