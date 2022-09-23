@@ -8,6 +8,10 @@
 
 - hosts: all
   become: true
+  environment:
+    PATH: "{{ lookup('env', 'HOME') }}/.local/bin:{{ ansible_env.PATH }}"
 
   roles:
     - role: setup
+    - role: docker
+      when: docker_needed == true
