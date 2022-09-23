@@ -17,3 +17,19 @@
   failed_when: "ping_res.rc != 0"
   changed_when: false
   # ignore_errors: true
+
+- block:
+  # Check DNS
+  - name: ping google by name
+    shell: "ping -q -c 1 google.com > /dev/null"
+    register: ping_res
+    failed_when: "ping_res.rc != 0"
+    changed_when: false
+
+  rescue:
+    # Check internet
+    - name: ping google by ip
+      shell: "ping -q -c 1 8.8.8.8 > /dev/null"
+      register: ping_res
+      failed_when: "ping_res.rc != 0"
+      changed_when: false
