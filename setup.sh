@@ -62,6 +62,13 @@ check_etc_hosts() {
             0)
                 # code if found
                 grep $host /etc/hosts
+                # ping once
+                if ping -q -c 1 $host > /dev/null
+                then
+                    echo "  ping OK"
+                else
+                    echo "  WARN: Ping to '$host' failed."
+                fi
                 ;;
             1)
                 # code if not found
