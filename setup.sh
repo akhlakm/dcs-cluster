@@ -93,7 +93,13 @@ check_ssh_pubkey() {
     fi
 }
 
+check_ansible_ping() {
+    echo "Checking ansible ping, please provide remote machines password ..."
+    ansible all -m ping -k
+}
+
 check_install_ansible
 ansible_config
 check_etc_hosts
 check_ssh_pubkey
+check_ansible_ping
