@@ -83,6 +83,17 @@ check_etc_hosts() {
     done
 }
 
+check_ssh_pubkey() {
+    if [[ $(find ~/.ssh -name "id_*.pub") == "" ]]
+    then
+        echo "No SSH public key found, please generate one ..."
+        ssh-keygen -t ed25519 -C "${HOSTNAME}"
+    else
+        echo "OK -- ssh pubkey file"
+    fi
+}
+
 check_install_ansible
 ansible_config
 check_etc_hosts
+check_ssh_pubkey
