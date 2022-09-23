@@ -1,0 +1,4 @@
+
+- name: main server 
+  shell: mfsmaster start
+

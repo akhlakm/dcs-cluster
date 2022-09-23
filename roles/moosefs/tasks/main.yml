@@ -1,0 +1,49 @@
+- block:
+    - name: mfsmount installed
+      shell: mfsmount --version 
+      register: cmd_result
+      failed_when: "cmd_result.rc != 0"
+      changed_when: false
+
+  rescue:
+    - name: download moosefs ppa key
+      get_url:
+        url: https://ppa.moosefs.com/RPM-GPG-KEY-MooseFS
+        dest: /tmp/mfskey
+        mode: 0744
+
+    - name: add moosefs key 
+      shell: cp /tmp/mfskey /etc/pki/rpm-gpg/RPM-GPG-KEY-MooseFS
+
+    - name: download moosefs repo 
+      get_url:
+        url: http://ppa.moosefs.com/MooseFS-3-el8.repo
+        dest: /tmp/mfsrepo
+        mode: 0744
+
+    - name: add moosefs repo 
+      shell: cp /tmp/mfsrepo /etc/yum.repos.d/MooseFS.repo
+
+    - name: mfsmount and chunkserver installed
+      package:
+        name:
+          - moosefs-client
+          - moosefs-chunkserver
+        state: present
+      when: mfsserver == 'chunk'
+    
+    - name: mfs master server installed
+      package:
+        name:
+          - moosefs-master
+          - moosefs-cgi
+          - moosefs-cgiserv
+          - moosefs-cli
+        state: present
+      when: mfsserver == 'main'
+
+    - name: mfsmount directory
+      path: /mnt/mfs/
+      state: directory
+      mode: 0777
+
