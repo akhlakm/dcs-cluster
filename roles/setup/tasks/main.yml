@@ -27,3 +27,6 @@
 
 - block:
   - import_tasks: intranet.yml
+
+- block:
+  - import_tasks: hardware.yml

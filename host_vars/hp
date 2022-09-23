@@ -6,3 +6,8 @@
 # MooseFS
 mfs_main: true
 mfs_chunk: false
+
+# Mount points
+mounts:
+  - /run
+  - /run/user

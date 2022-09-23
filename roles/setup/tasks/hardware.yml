@@ -1,0 +1,7 @@
+- name: check mount points
+  shell: "df | awk '{print $6}' | grep {{ item }}"
+  with_items: "{{ mounts }}"
+  register: df_res
+  failed_when: "df_res.rc != 0"
+  changed_when: false
+  when: mounts is defined
