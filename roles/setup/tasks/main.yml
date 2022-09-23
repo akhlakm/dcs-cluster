@@ -22,11 +22,12 @@
 - import_tasks: ansible-user.yml
 
 - block:
-  - import_tasks: nfs-client.yml
-  when: nfs_server_ip is defined
-
-- block:
   - import_tasks: intranet.yml
 
 - block:
   - import_tasks: hardware.yml
+
+- block:
+  - import_tasks: nfs-client.yml
+  when: nfs_server_ip is defined
+
