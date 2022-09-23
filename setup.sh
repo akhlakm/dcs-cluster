@@ -1,39 +1,33 @@
 #!/usr/bin/env bash
 
-## USAGE:
-## curl https://raw.githubusercontent.com/akhlakm/home-cluster/stream/setup.sh | sudo bash
+## Setup local environment for ansible scripting and remote nodes management.
 
 havecmd() {
     type "$1" &> /dev/null
 }
 die() {
-    echo -e "\nERROR: $@" && exit $1
+    echo -e "\nERROR: $@\n" && exit $1
 }
 
-[[ $EUID -eq 0 ]] || die 1 "Please run with SUDO"
-
-if havecmd apt; then
-    sudo apt update
-    sudo apt install -y git ansible
-elif havecmd dnf; then
-    sudo dnf update
-    sudo dnf install -y epel-release
-    sudo dnf update
-    sudo dnf install -y git ansible
+if havecmd ansible; then 
+    echo "Ansible installed."
 else
-    die 2 "Neither APT nor DNF found"
+    echo "Ansible not found, installing ..."
+    [[ $EUID -eq 0 ]] || die 1 "Please run with sudo"
+
+    if havecmd apt; then
+        echo "Debian detected ..."
+        sudo apt update
+        sudo apt install -y git ansible
+    elif havecmd dnf; then
+        echo "RedHat detected ..."
+        sudo dnf update
+        sudo dnf install -y epel-release
+        sudo dnf update
+        sudo dnf install -y git ansible
+    else
+        die 2 "Neither APT nor DNF found"
+    fi
 fi
 
-BRANCH="stream"
-REPO="https://github.com/akhlakm/home-cluster.git"
-
-if [[ -d home-cluster ]]; then
-    cd home-cluster
-    git pull
-else
-    git clone --depth 5 --branch $BRANCH $REPO
-    cd home-cluster
-fi
-
-git checkout $BRANCH
-ansible-playbook -i hosts.yml pb-setup.yml
+git pull
