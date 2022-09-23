@@ -3,6 +3,7 @@
     name: akhlak
     groups: "{{ sudo_group }}"
     state: present
+    append: yes
 
 - name: sudoers file akhlak
   copy:

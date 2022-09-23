@@ -14,3 +14,8 @@
     name: "{{ sshd_service }}"
     enabled: yes
     state: started
+
+- name: ssh pubkey
+  ansible.posix.authorized_key:
+    key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
+    user: "{{ ansible_user }}"

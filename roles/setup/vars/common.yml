@@ -4,6 +4,6 @@ passwd_auth: "yes"
 nameserver1: 1.1.1.1
 nameserver2: 8.8.8.8
 
-# define to not mount
+# Uncomment to mount NFS
 # nfs_server_ip: 192.168.100.100
-nfs_server_path: /mnt/nfs_share
+# nfs_server_path: /mnt/nfs_share

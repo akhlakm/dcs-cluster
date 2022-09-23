@@ -1,5 +1,6 @@
 - block:
-  - debug: msg="IP address is {{ ip_address }}"
+  - name: ip address defined
+    debug: msg="IP address is {{ ip_address }}"
     when: eth_device is defined
   rescue:
     - fail:

@@ -11,4 +11,3 @@
 
 - name: mount NFS
   command: mount "{{ nfs_server_ip }}:{{ nfs_server_path }}" /mnt/nfs/
-  when: nfs_server_ip is defined

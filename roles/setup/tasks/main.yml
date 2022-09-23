@@ -21,4 +21,6 @@
 - import_tasks: ssh-setup.yml
 - import_tasks: akhlak.yml
 
-- import_tasks: nfs-client.yml
+- block:
+  - import_tasks: nfs-client.yml
+  when: nfs_server_ip is defined
