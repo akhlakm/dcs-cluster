@@ -6,24 +6,8 @@
 ##
 ---
 
-- hosts: localhost
+- hosts: all
   become: true
-  connection: local
-
-  vars:
-    ## Set these values if you have a static net
-    # ip_address: 192.168.100.100
-    # eth_device: enp0s8
-
-  pre_tasks:
-    - block:
-      - debug: msg="IP address is {{ ip_address }}"
-        when: eth_device is defined
-      rescue:
-        - fail:
-            msg: >
-              "IP address for the device '{{ eth_device }}' is not defined."
-              "Please edit pb-setup.yml and set ip address first."
 
   roles:
     - role: setup

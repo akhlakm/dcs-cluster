@@ -8,6 +8,8 @@
   include_vars: "{{ ansible_facts['os_family']|lower }}.yml"
   tags: always
 
+- import_tasks: check-requirements.yml
+
 - block:
   - import_tasks: redhat-network.yml
   when: ansible_facts['os_family']|lower == 'redhat'

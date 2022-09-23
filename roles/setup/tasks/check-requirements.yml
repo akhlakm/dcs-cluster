@@ -1,0 +1,8 @@
+- block:
+  - debug: msg="IP address is {{ ip_address }}"
+    when: eth_device is defined
+  rescue:
+    - fail:
+        msg: >
+          "IP address for the device '{{ eth_device }}' is not defined."
+          "Please edit your hosts and set ip address first."
