@@ -13,7 +13,7 @@ ansible_config() {
     # Set the ansible.cfg location to cwd
     if [[ "$ANSIBLE_CONFIG" == "ansible.cfg" ]];
     then 
-        echo "OK -- ANSIBLE_CONFIG is set to CWD/ansible.cfg"
+        echo "OK -- ANSIBLE_CONFIG is set to ./ansible.cfg"
     else
         if [[ -f ~/.bash_aliases ]];
         then
@@ -21,7 +21,7 @@ ansible_config() {
         else 
             echo "export ANSIBLE_CONFIG=ansible.cfg" >> ~/.bashrc
         fi
-        echo "OK -- ANSIBLE_CONFIG has been set to CWD/ansible.cfg"
+        echo "OK -- ANSIBLE_CONFIG has been set to ./ansible.cfg"
         echo "NOTE: Please source your bashrc"
     fi
 }
@@ -29,7 +29,7 @@ ansible_config() {
 check_install_ansible() {
     if havecmd ansible;
     then 
-        echo "OK -- Ansible installed."
+        echo "OK -- Ansible found"
     else
         echo "Ansible not found, installing ..."
         [[ $EUID -eq 0 ]] || die 1 "Please run with sudo"
@@ -83,6 +83,6 @@ check_etc_hosts() {
     done
 }
 
-ansible_config
 check_install_ansible
+ansible_config
 check_etc_hosts
