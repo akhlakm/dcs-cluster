@@ -33,12 +33,6 @@
         groups: docker
         append: yes
 
-    - name: ansible a member of the docker group 
-      user:
-        name: ansible
-        groups: docker
-        append: yes
-
 - block:
   - name: docker service enabled
     service:
