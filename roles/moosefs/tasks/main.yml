@@ -43,7 +43,8 @@
       when: mfsserver == 'main'
 
     - name: mfsmount directory
-      path: /mnt/mfs/
-      state: directory
-      mode: 0777
+      file:
+        path: /mnt/mfs/
+        state: directory
+        mode: 0777
 
