@@ -7,6 +7,11 @@
   environment:
     PATH: "{{ lookup('env', 'HOME') }}/.local/bin:{{ ansible_env.PATH }}"
 
+  pre_tasks:
+    - debug:
+        msg: "host: {{ inventory_hostname }} ip: {{ ansible_host }}"
+      tags: always
+
   tasks:
     - block:
         - include_role:

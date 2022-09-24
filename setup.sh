@@ -112,7 +112,7 @@ check_ansible_ping() {
 }
 
 check_install_ansible
-ansible_config
+# ansible_config
 check_etc_hosts
 check_ssh_pubkey
 # check_ansible_ping
