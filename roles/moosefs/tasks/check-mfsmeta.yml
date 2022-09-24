@@ -1,11 +1,23 @@
 - block:
+
+    - name: container facts
+      set_fact:
+        containerName: "mfsMeta2"
+        containerHostname: "{{ inventory_hostname }}"
+        containerHostIP: "{{ ansible_host }}"
+        containerImage: akhlakm/mfsmeta
+
     - name: metalogger running 
-      shell: "docker inspect mfsMeta"
+      shell: "docker inspect {{ containerName }}"
       register: cmd_result
       failed_when: "cmd_result.rc != 0"
       changed_when: false
 
   rescue:
+
+    - name: remove old container
+      shell: "docker rm {{ containerName }}"
+      ignore_errors: true
 
     - name: metalogger dockerfiles
       copy:
@@ -26,15 +38,26 @@
         owner: root
         mode: 0744
 
-    - name: metalogger script
-      copy:
-        src: startmeta.sh
-        dest: /tmp/startmeta.sh
-        mode: 0744
+    - name: meta mount dir exists
+      file:
+        path: /root/mfsMeta
+        state: directory
 
-    - name: docker build and run metalogger
+    - name: docker build
       shell:
-        cmd: "/tmp/startmeta.sh {{ inventory_hostname }}"
+        cmd: "docker build -t {{ containerImage }} MetaLogger"
         chdir: /tmp
+      register: cmd_result
+      failed_when: "cmd_result.rc != 0"
+
+    - name: docker run
+      shell:
+        cmd: >
+          docker run -td
+          -v /root/mfsMeta:/var/lib/mfs
+          --hostname="{{ containerHostname }}"
+          --name="{{ containerName }}"
+          "{{ containerImage }}"
+
       register: cmd_result
       failed_when: "cmd_result.rc != 0"
