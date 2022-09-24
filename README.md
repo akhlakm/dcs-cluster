@@ -17,6 +17,7 @@ ansible-playbook playbook.yml
 ```
 
 # Architecture
+![Types of Nodes in Cluster](info/cluster-nodes.svg "Types of Nodes in Cluster")
 
 ## Points of Cluster Failure
 1. Assuming a single type of OS/software/environment
