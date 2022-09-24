@@ -6,9 +6,9 @@
     append: yes
 
 - name: sudoers file of ansible user
-  copy:
+  template:
+      src: sudoer.j2
       dest: "/etc/sudoers.d/{{ ansible_user }}"
-      content: "{{ ansible_user }} ALL=(ALL) NOPASSWD: ALL"
       owner: root
       group: root
       mode: 0440
