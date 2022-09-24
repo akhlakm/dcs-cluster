@@ -1,10 +1,8 @@
 [all]
 legion  ansible_host=192.168.100.101
 hp      ansible_host=192.168.100.102
-; mini  ansible_host=192.168.100.103
 
 [all:vars]
-branch = stream
 docker_needed = false
 mfsmain = legion
 mfschunk = false
