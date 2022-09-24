@@ -1,49 +1,87 @@
-- name: extract ip:path
+- name: extract port:path
   set_fact:
-    chunkIP: "{{ item.split(':')[0] }}"
+    chunkPort: "{{ item.split(':')[0] }}"
     chunkPath: "{{ item.split(':')[1] }}"
+
+- name: container facts
+  set_fact:
+    containerName: "mfsChunk{{ chunkPort }}"
+    containerHostname: "{{ inventory_hostname }}-{{ chunkPort }}"
+    containerHostIP: "{{ ansible_host }}"
+    containerImage: "mfschunk{{chunkPort}}"
+    dockerDirectory: ChunkServer
+
+- name: chunk directory
+  file: 
+    path: "{{ chunkPath }}"
+    state: directory
 
 - block:
 
     - name: chunkserver running 
-      shell: "docker inspect mfsChunk{{ chunkIP }}"
-      register: cmd_result
-      failed_when: "cmd_result.rc != 0"
+      shell: "docker inspect -f '{{ '{{' }} .State.Running {{ '}}' }}' {{ containerName }}"
+      register: cmd
+      failed_when: "(cmd.rc != 0) or (cmd.stdout == 'false')"
       changed_when: false
 
   rescue:
 
-    - name: chunkserver config
+    - name: copy dockerfiles
+      copy:
+        src: "{{ dockerDirectory }}"
+        dest: /tmp/
+        mode: 0744
+
+    - name: copy config template
       template:
         src: mfschunk.cfg
-        dest: /tmp/ChunkServer/mfschunk.cfg
+        dest: "/tmp/{{ dockerDirectory }}/mfschunk.cfg"
         owner: root
         mode: 0744
 
+    - name: copy host /etc/hosts to container
+      # container entrypoint will add these hosts manually
+      shell: "cp -f /etc/hosts /tmp/{{ dockerDirectory }}/etc_hosts"
 
-    - name: docker build and run chunkserver
+    - name: remove old container
+      shell: "docker rm {{ containerName }}"
+      ignore_errors: true
+
+    - name: docker build
       shell:
-        cmd: "/tmp/startchunk.sh {{ inventory_hostname }} {{ chunkIP }} {{ chunkPath }}"
+        cmd: "docker build -t {{ containerImage }} {{ dockerDirectory }}"
         chdir: /tmp
       register: cmd_result
       failed_when: "cmd_result.rc != 0"
 
+    - name: docker run
+      shell:
+        cmd: >
+          docker run -td
+          -p "{{ chunkPort }}:{{ chunkPort }}"
+          -v "{{ chunkPath }}":/data
+          --hostname="{{ containerHostname }}"
+          --name="{{ containerName }}"
+          "{{ containerImage }}"
+
+      register: cmd_result
+      failed_when: "cmd_result.rc != 0"
+
     - name: open port for chunkserver (redhat)
-      shell: "firewall-cmd --zone=public --add-port={{ chunkIP }}/tcp"
+      shell: "firewall-cmd --zone=public --add-port={{ chunkPort }}/tcp"
       register: cmd_result
       failed_when: "cmd_result.rc != 0"
       changed_when: false
       when: ansible_facts['os_family']|lower == 'redhat'
 
     - name: open port for chunkserver (debian)
-      shell: ufw allow {{ chunkIP }}/tcp
+      shell: ufw allow {{ chunkPort }}/tcp
       register: cmd_result
       failed_when: "cmd_result.rc != 0"
       changed_when: false
       when: ansible_facts['os_family']|lower == 'debian'
 
-    - name: confirm chunkserver port in use
-      shell: "curl localhost:{{ chunkIP }}"
-      register: cmd_result
-      failed_when: "cmd_result.rc == 7"
-      changed_when: false
+    - name: confirm port in use
+      wait_for:
+        port: "{{ chunkPort }}"
+        delay: 1
