@@ -1,0 +1,49 @@
+- name: extract ip:path
+  set_fact:
+    chunkIP: "{{ item.split(':')[0] }}"
+    chunkPath: "{{ item.split(':')[1] }}"
+
+- block:
+
+    - name: chunkserver running 
+      shell: "docker inspect mfsChunk{{ chunkIP }}"
+      register: cmd_result
+      failed_when: "cmd_result.rc != 0"
+      changed_when: false
+
+  rescue:
+
+    - name: chunkserver config
+      template:
+        src: mfschunk.cfg
+        dest: /tmp/ChunkServer/mfschunk.cfg
+        owner: root
+        mode: 0744
+
+
+    - name: docker build and run chunkserver
+      shell:
+        cmd: "/tmp/startchunk.sh {{ inventory_hostname }} {{ chunkIP }} {{ chunkPath }}"
+        chdir: /tmp
+      register: cmd_result
+      failed_when: "cmd_result.rc != 0"
+
+    - name: open port for chunkserver (redhat)
+      shell: "firewall-cmd --zone=public --add-port={{ chunkIP }}/tcp"
+      register: cmd_result
+      failed_when: "cmd_result.rc != 0"
+      changed_when: false
+      when: ansible_facts['os_family']|lower == 'redhat'
+
+    - name: open port for chunkserver (debian)
+      shell: ufw allow {{ chunkIP }}/tcp
+      register: cmd_result
+      failed_when: "cmd_result.rc != 0"
+      changed_when: false
+      when: ansible_facts['os_family']|lower == 'debian'
+
+    - name: confirm chunkserver port in use
+      shell: "curl localhost:{{ chunkIP }}"
+      register: cmd_result
+      failed_when: "cmd_result.rc == 7"
+      changed_when: false

@@ -87,6 +87,11 @@
 
 # MFS Chunk
 - block:
+    - name: docker OK
+      fail:
+        msg: docker is needed for chunkserver
+      when: docker_needed == 'false'
+
     - name: mfschunk installed
       shell: mfschunkserver -v
       register: cmd_result
@@ -98,6 +103,7 @@
       package:
         name:
           - moosefs-chunkserver
+          - moosefs-metalogger
         state: present
 
   when: mfschunk == true
