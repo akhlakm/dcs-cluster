@@ -7,7 +7,7 @@
 
   rescue:
 
-    - name: chunkserver dockerfiles
+    - name: metalogger dockerfiles
       copy:
         src: MetaLogger
         dest: /tmp/
@@ -19,7 +19,7 @@
         src: "{{ playbook_dir }}/etc_hosts"
         dest: /tmp/MetaLogger/etc_hosts
 
-    - name: chunkserver config
+    - name: metalogger config
       template:
         src: mfsmetalogger.cfg
         dest: /tmp/MetaLogger/mfsmetalogger.cfg

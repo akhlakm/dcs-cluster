@@ -12,11 +12,12 @@
     PATH: "{{ lookup('env', 'HOME') }}/.local/bin:{{ ansible_env.PATH }}"
 
   tasks:
-    # - include_role:
-    #     name: setup
+    - include_role:
+        name: setup
 
-    # - include_role: name=docker
-    #   when: docker_needed == true
+    - include_role:
+        name: docker
+      when: docker_needed == true
 
     - include_role:
         name: moosefs
