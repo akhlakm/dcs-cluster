@@ -1,0 +1,95 @@
+# Debian PPA
+- block:
+  - name: mfs ppa key (debian)
+    ansible.builtin.apt_key:
+      url: https://ppa.moosefs.com/moosefs.key
+      state: present
+
+  - name: mfs ppa (debian)
+    ansible.builtin.apt_repository:
+      repo: deb [arch=amd64] http://ppa.moosefs.com/moosefs-3/apt/ubuntu/focal focal main
+      state: present
+
+  when: ansible_facts['os_family']|lower == 'debian'
+
+# RedHat PPA
+- block:
+    - name: mfs ppa (redhat)
+      file:
+        path: /etc/yum.repos.d/MooseFS.repo
+        state: file
+      changed_when: false
+
+  rescue:
+    - name: download moosefs ppa key
+      get_url:
+        url: https://ppa.moosefs.com/RPM-GPG-KEY-MooseFS
+        dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-MooseFS
+        mode: 0744
+
+    - name: download moosefs repo 
+      get_url:
+        url: http://ppa.moosefs.com/MooseFS-3-el8.repo
+        dest: /etc/yum.repos.d/MooseFS.repo
+        mode: 0744
+
+  when: ansible_facts['os_family']|lower == 'redhat'
+
+# MFS Client
+- block:
+    - name: mfsmount installed
+      shell: mfsmount --version 
+      register: cmd_result
+      failed_when: "cmd_result.rc != 0"
+      changed_when: false
+
+    - name: mfs mount point exists
+      file:
+        path: /mnt/mfs
+        state: directory
+        mode: 0777
+
+  rescue:
+    - name: install mfsclient
+      package:
+        name:
+          - moosefs-client
+          - moosefs-chunkserver
+        state: present
+  when: mfsmount is defined
+
+# MFS Master
+- block:
+    - name: mfsmaster installed
+      shell: mfsmaster -v
+      register: cmd_result
+      failed_when: "cmd_result.rc != 0"
+      changed_when: false
+
+  rescue:
+    - name: install mfs master server
+      package:
+        name:
+          - moosefs-client
+          - moosefs-master
+          - moosefs-cgi
+          - moosefs-cgiserv
+          - moosefs-cli
+        state: present
+  when: mfsmaster == true
+
+# MFS Chunk
+- block:
+    - name: mfschunk installed
+      shell: mfschunkserver -v
+      register: cmd_result
+      failed_when: "cmd_result.rc != 0"
+      changed_when: false
+
+  rescue:
+    - name: install mfs chunk server
+      package:
+        name:
+          - moosefs-chunkserver
+        state: present
+  when: mfschunk == true

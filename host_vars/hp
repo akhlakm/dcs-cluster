@@ -4,8 +4,9 @@
 # ip_address: 192.168.100.100
 
 # MooseFS
-mfs_main: true
-mfs_chunk: false
+mfsmaster: true
+mfschunk: false
+mfsmount: true
 
 # Mount points
 mounts:
