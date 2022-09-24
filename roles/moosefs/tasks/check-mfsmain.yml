@@ -1,4 +1,81 @@
+# Copy the config files
+- name: mfs main config
+  template:
+    src: mfsmain.cfg
+    dest: /etc/mfs/mfsmaster.cfg
+    owner: root
+    mode: 0644
 
-- name: main server 
-  shell: mfsmaster start
+- name: mfs exports config
+  template:
+    src: mfsexports.cfg
+    dest: /etc/mfs/mfsexports.cfg
+    owner: root
+    mode: 0644
 
+# Check if Main server is running
+- block:
+  - name: mfs main running 
+    shell: "mfsmaster status"
+    register: cmd_result
+    failed_when: "cmd_result.rc == 1"
+    changed_when: false
+
+  rescue:
+    - name: create new mfs meta 
+      copy:
+        dest: /var/lib/mfs/metadata.mfs
+        content: "MFSM NEW"
+        owner: root
+        mode: 0744
+      when: MFSFIRSTRUN is defined
+
+    - block:
+        - name: mfs meta exists
+          file:
+            path: /var/lib/mfs/metadata.mfs
+            state: file
+
+        - name: start mfs main
+          shell: mfsmaster -u -xx start
+          register: cmd_result
+          failed_when: "cmd_result.rc != 0"
+
+      rescue:
+        - name: mfs change log exists
+          file:
+            path:
+              - /var/lib/mfs/metadata.mfs.back.1
+              - /var/lib/mfs/changelog.0.mfs
+            state: file
+
+        - name: start mfs, rebuid meta
+          shell: mfsmaster -u -a -xx start
+          register: cmd_result
+          failed_when: "cmd_result.rc != 0"
+
+# Check if CGI Server is running
+- block:
+  - name: curl installed
+    package:
+      name: curl
+      state: present
+
+  - name: mfs cgi running 
+    shell: "curl localhost:{{ mfscgi_port }}"
+    register: cmd_result
+    failed_when: "cmd_result.rc == 7"
+    changed_when: false
+
+  rescue:
+
+    - name: add localhost as mfsmaster
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        line: "127.0.0.1     mfsmaster"
+        state: present
+
+    - name: start mfs cgi
+      shell: mfscgiserv start
+      register: cmd_result
+      failed_when: "cmd_result.rc != 0"

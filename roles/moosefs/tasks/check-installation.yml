@@ -72,9 +72,10 @@
         name:
           - moosefs-client
           - moosefs-master
+          - moosefs-cli
+          - python3
           - moosefs-cgi
           - moosefs-cgiserv
-          - moosefs-cli
         state: present
   when: mfsmaster == true
 

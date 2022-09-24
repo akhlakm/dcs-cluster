@@ -1,2 +1,17 @@
 - block:
   - import_tasks: check-installation.yml
+
+- name: mfsmaster not localhost
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    line: "127.0.0.1     mfsmaster"
+    state: absent
+  when: mfsmaster == 'false'
+
+- block:
+  - import_tasks: check-mfsmain.yml
+  when: mfsmaster == true
+
+- block:
+  - import_tasks: check-mfschunk.yml
+  when: mfschunk == true

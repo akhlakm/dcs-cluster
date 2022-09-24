@@ -1,4 +1,4 @@
-        
 - name: chunkserver
-  shell: mfschunkserver start
-
+  fail:
+    msg: docker is needed for chunkserver
+  when: docker_needed == 'false'

@@ -3,6 +3,8 @@
 # eth_device: enp1s8
 # ip_address: 192.168.100.100
 
-mfsmaster: false
-mfschunk: true
+mfsmaster: true
+mfschunk: false
 mfsmount: true
+
+MFSFIRSTRUN: true
