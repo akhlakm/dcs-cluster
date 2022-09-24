@@ -1,3 +1,8 @@
+- name: ufw available
+  apt:
+    name: ufw
+    state: present
+
 - name: static network (debian)
   tags: system, network
   template:

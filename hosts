@@ -1,8 +1,9 @@
 [all]
 legion
 hp
-mini
+; mini
 
 [all:vars]
 branch = stream
 docker_needed = false
+mfsmain = legion

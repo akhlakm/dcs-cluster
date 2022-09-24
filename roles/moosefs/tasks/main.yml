@@ -6,12 +6,13 @@
     path: /etc/hosts
     line: "127.0.0.1     mfsmaster"
     state: absent
-  when: mfsmaster == 'false'
+  when: mfsmain != inventory_hostname
 
 - block:
-  - import_tasks: check-mfsmain.yml
-  when: mfsmaster == true
+  - include_tasks: check-mfsmain.yml
+  when: mfsmain == inventory_hostname
 
 - block:
-  - import_tasks: check-mfschunk.yml
+  - include_tasks: check-mfschunk.yml
   when: mfschunk == true
+  tags: chunk

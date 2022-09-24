@@ -56,10 +56,6 @@
 
 # Check if CGI Server is running
 - block:
-  - name: curl installed
-    package:
-      name: curl
-      state: present
 
   - name: mfs cgi running 
     shell: "curl localhost:{{ mfscgi_port }}"
@@ -79,3 +75,18 @@
       shell: mfscgiserv start
       register: cmd_result
       failed_when: "cmd_result.rc != 0"
+
+- block:
+    - name: open ports for mfs master (redhat)
+      shell: firewall-cmd --zone=public --add-port=9419-9425/tcp
+      register: cmd_result
+      failed_when: "cmd_result.rc != 0"
+      changed_when: false
+      when: ansible_facts['os_family']|lower == 'redhat'
+
+    - name: open ports for mfs master (debian)
+      shell: ufw allow 9419:9425/tcp
+      register: cmd_result
+      failed_when: "cmd_result.rc != 0"
+      changed_when: false
+      when: ansible_facts['os_family']|lower == 'debian'

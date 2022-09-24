@@ -27,9 +27,9 @@
         name: docker
         state: present
 
-    - name: akhlak a member of the docker group 
+    - name: ansible user a member of the docker group 
       user:
-        name: akhlak
+        name: "{{ ansible_user }}"
         groups: docker
         append: yes
 

@@ -35,6 +35,11 @@
 
   when: ansible_facts['os_family']|lower == 'redhat'
 
+- name: curl is found
+  package:
+    name: curl 
+    state: present
+
 # MFS Client
 - block:
     - name: mfsmount installed
@@ -77,7 +82,8 @@
           - moosefs-cgi
           - moosefs-cgiserv
         state: present
-  when: mfsmaster == true
+
+  when: mfsmain == inventory_hostname
 
 # MFS Chunk
 - block:
@@ -93,4 +99,5 @@
         name:
           - moosefs-chunkserver
         state: present
+
   when: mfschunk == true
