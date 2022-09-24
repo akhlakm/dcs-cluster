@@ -1,9 +1,5 @@
-##
-## Setup a node with users, ssh, networking etc.
-##
 ## USAGE:
-## sudo ansible-playbook pb-setup.yml
-##
+## ansible-playbook playbook.yml
 ---
 
 - hosts: all
