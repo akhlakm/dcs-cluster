@@ -7,3 +7,5 @@ hp
 branch = stream
 docker_needed = false
 mfsmain = legion
+mfschunk = false
+mfsmount = true
