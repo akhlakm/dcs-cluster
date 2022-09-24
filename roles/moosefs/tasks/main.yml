@@ -34,7 +34,7 @@
 
     # Run a chunkserver for each mount points
     - name: Check chunkserver
-      include_tasks: check-mfschunk.yml
+      include_tasks: loop-mfschunk.yml
       loop: "{{ mfschunkmounts | list }}"
 
   when: mfschunk == true
@@ -44,7 +44,7 @@
 
     # Run a meta logger in each chunk host
     - name: Check MetaLogger
-      include_tasks: loop-mfsmeta.yml
+      include_tasks: check-mfsmeta.yml
       when: mfsmain != inventory_hostname
 
   when: mfschunk == true
