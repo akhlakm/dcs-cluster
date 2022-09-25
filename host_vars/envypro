@@ -1,0 +1,6 @@
+---
+
+mfschunk: true
+mfschunkmounts:
+  - 9401:/home/akhlak/mfs_data
+docker_needed: true

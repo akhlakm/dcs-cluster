@@ -106,4 +106,4 @@
           - moosefs-metalogger
         state: present
 
-  when: mfschunk == true
+  when: mfschunk == 'true'

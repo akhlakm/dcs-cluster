@@ -1,0 +1,8 @@
+---
+mounts:
+    - /mnt/wd_hdd
+
+mfschunk: true
+mfschunkmounts:
+  - 9401:/mnt/wd_hdd/mfs
+docker_needed: true
