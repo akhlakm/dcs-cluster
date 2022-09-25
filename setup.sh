@@ -15,14 +15,8 @@ ansible_config() {
     then 
         echo "OK -- ANSIBLE_CONFIG is set to ./ansible.cfg"
     else
-        if [[ -f ~/.bash_aliases ]];
-        then
-            echo "export ANSIBLE_CONFIG=ansible.cfg" >> ~/.bash_aliases
-        else 
-            echo "export ANSIBLE_CONFIG=ansible.cfg" >> ~/.bashrc
-        fi
+        export ANSIBLE_CONFIG=ansible.cfg
         echo "OK -- ANSIBLE_CONFIG has been set to ./ansible.cfg"
-        echo "NOTE: Please source your bashrc"
     fi
 }
 
@@ -112,7 +106,7 @@ check_ansible_ping() {
 }
 
 check_install_ansible
-# ansible_config
-check_etc_hosts
+ansible_config
+# check_etc_hosts
 check_ssh_pubkey
 # check_ansible_ping
