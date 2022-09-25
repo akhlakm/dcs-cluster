@@ -22,3 +22,10 @@
     owner: root
     mode: 0644
   notify: restart_NetworkManager
+
+- name: packages present
+  yum:
+    name:
+      - epel-release
+      - htop
+    state: present
