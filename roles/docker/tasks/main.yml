@@ -8,6 +8,14 @@
 
   rescue:
 
+    - name: packages not present (redhat)
+      yum:
+        name:
+          - podman
+          - runc
+        state: absent
+      when: ansible_facts['os_family']|lower == 'redhat'
+
     - name: download get-docker
       get_url:
         url: https://get.docker.com
