@@ -1,4 +1,4 @@
-Set up an on-premise Distributed Computing and Storage cluster of *High Availability* using Ansible, Docker, CentOS, Nomad, and PySpark.
+Set up an on-premise Distributed Computing and Storage cluster of *High Availability* using Ansible and Docker on CentOS.
 
 ### USAGE
 
