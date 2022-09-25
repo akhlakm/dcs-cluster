@@ -2,7 +2,5 @@
 mounts:
     - /media
 
-mfschunk: true
-mfschunkmounts:
-  - 9401:/media/mfs/
+mfschunk: false
 docker_needed: true

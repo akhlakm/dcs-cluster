@@ -26,7 +26,7 @@
       include_tasks: docker-mfschunk.yml
       loop: "{{ mfschunkmounts | list }}"
 
-  when: mfschunk == true
+  when: mfschunk == 'true'
 
 
 - block:
@@ -36,4 +36,28 @@
       include_tasks: docker-mfsmeta.yml
       when: mfsmain != inventory_hostname
 
-  when: mfschunk == true
+  when: mfschunk == 'true'
+
+- block:
+
+    - name: mfsmount directory
+      file:
+        path: /mfsmount
+        state: directory
+        owner: root
+        mode: 0766
+
+    - block:
+        - name: check mfs mount points
+          shell: "df | awk '{print $6}' | grep /mfsmount"
+          register: df_res
+          failed_when: "df_res.rc != 0"
+          changed_when: false
+
+      rescue:
+        - name: mount mfs
+          shell: "mfsmount -H {{ mfsmain }} /mfsmount"
+          register: cmd
+          failed_when: "cmd.rc != 0"
+  
+  when: mfsmount == 'true'

@@ -84,9 +84,3 @@
       failed_when: "cmd_result.rc != 0"
       changed_when: false
       when: ansible_facts['os_family']|lower == 'debian'
-
-- name: add localhost as mfsmaster
-  ansible.builtin.lineinfile:
-    path: /etc/hosts
-    line: "127.0.0.1     mfsmaster"
-    state: present

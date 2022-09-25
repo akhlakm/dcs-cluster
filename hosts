@@ -1,9 +1,0 @@
-[all]
-legion  ansible_host=192.168.100.101
-hp      ansible_host=192.168.100.102
-
-[all:vars]
-docker_needed = false
-mfsmain = legion
-mfschunk = false
-mfsmount = true
